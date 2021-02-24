@@ -50,7 +50,7 @@ self.addEventListener('fetch', function(event) {
                     caches.open(CACHE_NAME)
                       .then(function(cache) {
                           console.log(`Back-caching response for ${event.request.url}.`)
-                          cache.put(event.request, responseToCache);
+                          cache.put(event.request, response);
                       });
                   }
                 }
