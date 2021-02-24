@@ -39,6 +39,23 @@ self.addEventListener('fetch', function(event) {
           // Cache hit - return response
           if (response) {
               console.log(`Cache hit - returning response for ${event.request.url}`)
+
+              // Update the cache asynchronously:
+              fetch(event.request).then(
+                function(response) {
+                  // Check if we received a valid response
+                  if(!response || response.status !== 200 || response.type !== 'basic') {
+                      console.log(`Non-basic response, so not back-caching: ${response.status} ${response.type}`)
+                  } else {
+                    caches.open(CACHE_NAME)
+                      .then(function(cache) {
+                          console.log(`Back-caching response for ${event.request.url}.`)
+                          cache.put(event.request, responseToCache);
+                      });
+                  }
+                }
+              );
+
               return response;
           }
   
