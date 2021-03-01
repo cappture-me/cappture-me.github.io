@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Collect and share memories  your child's life.">
+    <meta name="author" content="David Carboni, based on the work of Mark Otto, Jacob Thornton, and Bootstrap contributors">
+
+    <title>CapptureMe - Sharing your child's life</title>
+
+    <link rel="canonical" href="https://capptureme.com">
+    <link rel='manifest' href='/manifest.json'>
+
+    <!-- Icon and cover image credit: https://unsplash.com/photos/GFwzGcv2gqc -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+
+      body {
+        background-image: url('rodrigo-pereira-GFwzGcv2gqc-unsplash.jpg');
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-repeat: no-repeat;
+        background-size: cover;
+      }
+
+      h1 {
+        color: #ffeedd;
+        text-shadow: 0px 0px 6px #332211;
+      }
+
+      p {
+        color: #ffeedd;
+        text-shadow: 0px 0px 4px #332211;
+      }
+
+      a {
+        text-shadow: 0px 0px 3px #332211;
+      }
+
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="cover.css" rel="stylesheet">
+
+    <script>
+      // Service worker registration
+      // Based on: https://developers.google.com/web/fundamentals/primers/service-workers
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+            // Registration was successful
+            console.log(`ServiceWorker registration successful with scope: ${registration.scope}`);
+          }, function(err) {
+            // registration failed :(
+            console.log('ServiceWorker registration failed: ', err);
+          });
+        });
+      } else {
+          console.log(`ServiceWorker is not available in this navigator.`);
+      }
+    </script>
+
+  </head>
+
+  <body class="text-center">
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+  <header class="masthead mb-auto">
+    <div class="inner">
+      <h3 class="masthead-brand">CapptureMe</h3>
+      <nav class="nav nav-masthead justify-content-center">
+        <a class="nav-link active" href="https://capptureme.com">Home</a>
+        <a class="nav-link" href="signin.html">App</a>
+        <a class="nav-link" href="mailto:hello@capptureme.com">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main role="main" class="inner cover">
+    <h1 class="cover-heading">CapptureMe</h1>
+    <p class="lead">Share your child's life</p>
+    <p class="lead">
+      <a href="signin.html" class="btn btn-lg btn-secondary">Congratulations, you're logged in!</a>
+    </p>
+  </main>
+
+  <footer class="mastfoot mt-auto">
+    <div class="inner">
+      <p>All the memories, all the life</p>
+    </div>
+  </footer>
+</div>
+
+</body>
+</html>
