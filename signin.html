@@ -42,72 +42,6 @@
           console.log(`ServiceWorker is not available in this navigator.`);
       }
     </script>
-  </head>
-
-  <body class="text-center">
-
-    <!-- Facebook login -->
-    <div id="fb-root"></div>
-    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v10.0&appId=269817387888224" nonce="4cgNfP3i"></script>
-    <script>
-      window.fbAsyncInit = function() {
-        FB.init({
-          appId      : '269817387888224',
-          cookie     : true,
-          xfbml      : true,
-          version    : 'v10.0'
-        });
-        //FB.AppEvents.logPageView();
-
-        FB.getLoginStatus(function(response) {
-            if (response && response["status"] === 'connected') {
-              console.log("Connected to Facebook.")
-            }
-        });
-      };
-
-      (function(d, s, id){
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {return;}
-        js = d.createElement(s); js.id = id;
-        js.src = "https://connect.facebook.net/en_US/sdk.js";
-        fjs.parentNode.insertBefore(js, fjs);
-      }(document, 'script', 'facebook-jssdk'));
-    </script>
-
-    <header class="masthead mb-auto">
-      <div class="inner">
-        <h3 class="masthead-brand">CapptureMe</h3>
-        <nav class="nav nav-masthead justify-content-center">
-          <a class="nav-link active" href="https://capptureme.com">Home</a>
-          <a class="nav-link" href="https://capptureme.com">App</a>
-          <a class="nav-link" href="mailto:hello@cappture.me">Contact</a>
-        </nav>
-      </div>
-    </header>
-
-    <main role="main" class="inner cover">
-      <form class="form-signin">
-        <img class="mb-4" src="android-chrome-192x192.png" alt="app icon" width="72" height="72">
-        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-
-        <!-- Facebook login -->
-        <div class="fb-login-button" data-width="192" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
-
-        <!-- Google login -->
-        <a href="#"  onclick="javascript:signIn(google)">
-          <img src="assets/google_signin_buttons/web/2x/btn_google_signin_dark_normal_web@2x.png" width="192">
-        </a>
-
-        <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
-      </form>
-    </main>
-
-    <footer class="mastfoot mt-auto">
-      <div class="inner">
-        <p>All the memories, all the life</p>
-      </div>
-    </footer>
 
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
@@ -170,6 +104,68 @@
         });
       }
     </script>
+
+    <!-- Firebase auth -->
+    <script src="https://www.gstatic.com/firebasejs/ui/4.7.3/firebase-ui-auth.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.7.3/firebase-ui-auth.css" />
+    <script type="text/javascript">
+      // FirebaseUI config.
+      var uiConfig = {
+        signInSuccessUrl: '<url-to-redirect-to-on-success>',
+        signInOptions: [
+          // Leave the lines as is for the providers you want to offer your users.
+          firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+          firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+          firebase.auth.EmailAuthProvider.PROVIDER_ID
+        ],
+        // tosUrl and privacyPolicyUrl accept either url string or a callback
+        // function.
+        // Terms of service url/callback.
+        tosUrl: 'terms-of-service.html',
+        // Privacy policy url/callback.
+        privacyPolicyUrl: function() {
+          window.location.assign('privacy-polity.html');
+        }
+      };
+
+      // Initialize the FirebaseUI Widget using Firebase.
+      var ui = new firebaseui.auth.AuthUI(firebase.auth());
+      // The start method will wait until the DOM is loaded.
+      ui.start('#firebaseui-auth-container', uiConfig);
+    </script>
+
+  </head>
+
+  <body class="text-center">
+
+    <header class="masthead mb-auto">
+      <div class="inner">
+        <h3 class="masthead-brand">CapptureMe</h3>
+        <nav class="nav nav-masthead justify-content-center">
+          <a class="nav-link active" href="https://capptureme.com">Home</a>
+          <a class="nav-link" href="https://capptureme.com/signin.html">App</a>
+          <a class="nav-link" href="mailto:hello@capptureme.com">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main role="main" class="inner cover">
+      <form class="form-signin">
+        <img class="mb-4" src="android-chrome-192x192.png" alt="app icon" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+
+        <!-- Login -->
+        <div id="firebaseui-auth-container"></div>
+
+        <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+      </form>
+    </main>
+
+    <footer class="mastfoot mt-auto">
+      <div class="inner">
+        <p>All the memories, all the life</p>
+      </div>
+    </footer>
 
   </body>
 </html>
