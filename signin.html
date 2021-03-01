@@ -1,0 +1,175 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Collect and share memories  your child's life.">
+    <meta name="author" content="David Carboni, based on https://getbootstrap.com/docs/4.0/examples/sign-in/">
+
+    <title>CapptureMe - Sign In</title>
+
+    <link rel="canonical" href="https://capptureme.com">
+    <link rel='manifest' href='/manifest.json'>
+
+    <!-- Icon and cover image credit: https://unsplash.com/photos/GFwzGcv2gqc -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- Bootstrap core CSS -->
+    <link href="assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="signin.css" rel="stylesheet">
+
+    <script>
+      // Service worker registration
+      // Based on: https://developers.google.com/web/fundamentals/primers/service-workers
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('/service-worker.js').then(function(registration) {
+            // Registration was successful
+            console.log(`ServiceWorker registration successful with scope: ${registration.scope}`);
+          }, function(err) {
+            // registration failed :(
+            console.log('ServiceWorker registration failed: ', err);
+          });
+        });
+      } else {
+          console.log(`ServiceWorker is not available in this navigator.`);
+      }
+    </script>
+  </head>
+
+  <body class="text-center">
+
+    <!-- Facebook login -->
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v10.0&appId=269817387888224" nonce="4cgNfP3i"></script>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '269817387888224',
+          cookie     : true,
+          xfbml      : true,
+          version    : 'v10.0'
+        });
+        //FB.AppEvents.logPageView();
+
+        FB.getLoginStatus(function(response) {
+            if (response && response["status"] === 'connected') {
+              console.log("Connected to Facebook.")
+            }
+        });
+      };
+
+      (function(d, s, id){
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) {return;}
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+
+    <header class="masthead mb-auto">
+      <div class="inner">
+        <h3 class="masthead-brand">CapptureMe</h3>
+        <nav class="nav nav-masthead justify-content-center">
+          <a class="nav-link active" href="https://capptureme.com">Home</a>
+          <a class="nav-link" href="https://capptureme.com">App</a>
+          <a class="nav-link" href="mailto:hello@cappture.me">Contact</a>
+        </nav>
+      </div>
+    </header>
+
+    <main role="main" class="inner cover">
+      <form class="form-signin">
+        <img class="mb-4" src="android-chrome-192x192.png" alt="app icon" width="72" height="72">
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+
+        <!-- Facebook login -->
+        <div class="fb-login-button" data-width="192" data-size="large" data-button-type="continue_with" data-layout="default" data-auto-logout-link="false" data-use-continue-as="false"></div>
+
+        <!-- Google login -->
+        <a href="#"  onclick="javascript:signIn(google)">
+          <img src="assets/google_signin_buttons/web/2x/btn_google_signin_dark_normal_web@2x.png" width="192">
+        </a>
+
+        <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+      </form>
+    </main>
+
+    <footer class="mastfoot mt-auto">
+      <div class="inner">
+        <p>All the memories, all the life</p>
+      </div>
+    </footer>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+    
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-auth.js"></script>
+    
+    <script>
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      var firebaseConfig = {
+        apiKey: "AIzaSyAfCeLMJBv68MrylJ17S1Ix74iVzcFS3P0",
+        authDomain: "capptureme.firebaseapp.com",
+        projectId: "capptureme",
+        storageBucket: "capptureme.appspot.com",
+        messagingSenderId: "868903859039",
+        appId: "1:868903859039:web:503f119c5256a61c593cea",
+        measurementId: "G-QP97VBSNBD"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+
+      // Auth providers
+      var google = new firebase.auth.GoogleAuthProvider();
+      var provider = new firebase.auth.FacebookAuthProvider();
+
+      function signIn(provider) {
+        console.log("Calling sign-in")
+        firebase.auth()
+        .signInWithPopup(provider)
+        .then((result) => {
+
+        console.log("Sign-in result")
+          /** @type {firebase.auth.OAuthCredential} */
+          var credential = result.credential;
+
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          var token = credential.accessToken;
+          // The signed-in user info.
+          var user = result.user;
+          // ...
+        }).catch((error) => {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // The email of the user's account used.
+          var email = error.email;
+          // The firebase.auth.AuthCredential type that was used.
+          var credential = error.credential;
+
+          console.log("Sign-in error")
+          console.log(`erronCode ${errorCode}`)
+          console.log(`errorMessage ${errorMessage}`)
+          console.log(`email ${email}`)
+          console.log(`credential ${credential}`)
+          // ...
+        });
+      }
+    </script>
+
+  </body>
+</html>
