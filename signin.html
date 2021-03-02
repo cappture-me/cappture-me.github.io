@@ -121,11 +121,16 @@
           // User is signed in, see docs for a list of available properties
           // https://firebase.google.com/docs/reference/js/firebase.User
           console.log(`User logged in: ${user.displayName} ${user.uid}`)
+          window.location.href = "home.html";
         } else {
           // User is signed out
           console.log(`User logged out.`)
         }
       });
+
+      if (firebase.auth().currentUser) {
+          window.location.href = "home.html";
+      }
     </script>
 
     <!-- Firebase auth -->

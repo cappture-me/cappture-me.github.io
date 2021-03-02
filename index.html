@@ -114,6 +114,10 @@
           window.location.href = "home.html";
         }
       });
+
+      if (firebase.auth().currentUser) {
+          window.location.href = "home.html";
+      }
     </script>
 
   </head>
