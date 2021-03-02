@@ -116,42 +116,16 @@
       firebase.initializeApp(firebaseConfig);
       firebase.analytics();
 
-      // Auth providers
-      var google = new firebase.auth.GoogleAuthProvider();
-      var provider = new firebase.auth.FacebookAuthProvider();
-
-      function signIn(provider) {
-        console.log("Calling sign-in")
-        firebase.auth()
-        .signInWithPopup(provider)
-        .then((result) => {
-
-        console.log("Sign-in result")
-          /** @type {firebase.auth.OAuthCredential} */
-          var credential = result.credential;
-
-          // This gives you a Google Access Token. You can use it to access the Google API.
-          var token = credential.accessToken;
-          // The signed-in user info.
-          var user = result.user;
-          // ...
-        }).catch((error) => {
-          // Handle Errors here.
-          var errorCode = error.code;
-          var errorMessage = error.message;
-          // The email of the user's account used.
-          var email = error.email;
-          // The firebase.auth.AuthCredential type that was used.
-          var credential = error.credential;
-
-          console.log("Sign-in error")
-          console.log(`erronCode ${errorCode}`)
-          console.log(`errorMessage ${errorMessage}`)
-          console.log(`email ${email}`)
-          console.log(`credential ${credential}`)
-          // ...
-        });
-      }
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          // User is signed in, see docs for a list of available properties
+          // https://firebase.google.com/docs/reference/js/firebase.User
+          console.log(`User logged in: ${user.displayName} ${user.uid}`)
+        } else {
+          // User is signed out
+          console.log(`User logged out.`)
+        }
+      });
     </script>
 
     <!-- Firebase auth -->
