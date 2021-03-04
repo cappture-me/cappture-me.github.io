@@ -112,10 +112,17 @@
           // User is signed in, see docs for a list of available properties
           // https://firebase.google.com/docs/reference/js/firebase.User
           console.log(`User logged in: ${user.displayName} ${user.uid}`)
+          document.getElementById("userName").innerHTML = user.displayName;
+          document.getElementById("message").innerHTML = "Welcome " + user.displayName + "!";
+          var profilePicture = document.createElement("img");
+          profilePicture.src = user.photoURL; 
+          profilePicture.classList.add("img-fluid", "mx-auto", "rounded", "float-right")
+          document.getElementById("userName").appendChild(profilePicture);
         } else {
           // User is signed out
           window.location.href = "signin.html";
         }
+
       });
 
       function signOut() {
@@ -138,16 +145,32 @@
       <nav class="nav nav-masthead justify-content-center">
         <a class="nav-link active" href="https://capptureme.com">Home</a>
         <a class="nav-link" href="javascript:signOut()">Sign out</a>
-        <a class="nav-link" href="mailto:hello@capptureme.com">Contact</a>
+        <a class="nav-link" id="userName" href="mailto:hello@capptureme.com">Contact</a>
       </nav>
     </div>
   </header>
 
   <main role="main" class="inner cover">
-    <h1 class="cover-heading">CapptureMe</h1>
+    <h1 class="cover-heading" id="message">Welcome!</h1>
     <p class="lead">Share your child's life</p>
     <p class="lead">
       <a href="signin.html" class="btn btn-lg btn-secondary">Congratulations, you're logged in!</a>
+      <form>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email address</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Password</label>
+          <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+        </div>
+        <div class="form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1">
+          <label class="form-check-label" for="exampleCheck1">Check me out</label>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
     </p>
   </main>
 
@@ -157,6 +180,15 @@
     </div>
   </footer>
 </div>
+
+<script>
+  if (firebase.auth().currentUser) {
+      //document.getElementById("userName").innerHTML = user.displayName;
+  } else {
+      //console.log(" *** > " + firebase.auth().currentUser)
+      //window.location.href = "signin.html";
+  }
+</script>
 
 </body>
 </html>
