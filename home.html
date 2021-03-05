@@ -114,11 +114,13 @@
           console.log(`User logged in: ${user.displayName} ${user.uid}`)
           document.getElementById("userName").innerHTML = user.displayName;
           document.getElementById("message").innerHTML = "Welcome " + user.displayName + "!";
-          var profilePicture = document.createElement("img");
-          profilePicture.src = user.photoURL; 
-          profilePicture.classList.add("img-fluid", "rounded")
-          profilePicture.style = "height:32px"
-          document.getElementById("userName").appendChild(profilePicture);
+          if (user.photoURL) {
+            var profilePicture = document.createElement("img");
+            profilePicture.src = user.photoURL; 
+            profilePicture.classList.add("img-fluid", "rounded")
+            profilePicture.style = "height:32px"
+            document.getElementById("userName").appendChild(profilePicture);
+          }
         } else {
           // User is signed out
           window.location.href = "signin.html";
